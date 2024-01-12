@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import Column from './Column.jsx';
-import { Button } from '@mui/material';
-import { DragDropContext } from 'react-beautiful-dnd';
-import Header from './Header.jsx';
-import Footer from './Footer.jsx';
-import { reorder } from '../utils/reorder';
-import { move } from '../utils/move';
-import { useColumnsData } from './LocalContext.js';
-import { Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import Column from "./Column.jsx";
+import { Button } from "@mui/material";
+import { DragDropContext } from "react-beautiful-dnd";
+import Header from "./Header.jsx";
+import Footer from "./Footer.jsx";
+import { reorder } from "../utils/reorder";
+import { move } from "../utils/move";
+import { useColumnsData } from "./LocalContext.js";
+import { Outlet } from "react-router-dom";
 import {
   initializeBoard,
   updateBoardName,
   createColumn,
   deleteColumn,
   updateColumn,
-} from '../services/apiService.js';
+} from "../services/apiService.js";
 
 function Board() {
   const [boardId, setBoardId] = useState(null);
-  const [boardName, setBoardName] = useState('');
+  const [boardName, setBoardName] = useState("");
   const [isEditingBoardName, setIsEditingBoardName] = useState(true);
   const [columnsData, setColumnsData] = useColumnsData([]);
 
@@ -32,7 +32,7 @@ function Board() {
         setColumnsData(response.columns);
         console.log(response);
       } catch (error) {
-        console.error('Error fetching board details:', error);
+        console.error("Error fetching board details:", error);
       }
     };
 
@@ -46,7 +46,7 @@ function Board() {
         try {
           updateBoardName(boardId, boardName);
         } catch (error) {
-          console.error('Error updating board name:', error);
+          console.error("Error updating board name:", error);
         }
       }
     }, 300);
@@ -62,7 +62,7 @@ function Board() {
   };
 
   const handleKeyDownBoardName = async (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       setIsEditingBoardName(false);
       event.preventDefault();
     }
@@ -76,8 +76,8 @@ function Board() {
 
   const handleCreateColumn = async () => {
     const newColumn = {
-      name: '',
-      wip: '',
+      name: "",
+      wip: "",
       tasks: [],
       board: boardId,
     };
@@ -87,7 +87,7 @@ function Board() {
       const createdColumn = response.data;
       setColumnsData([...columnsData, createdColumn]);
     } catch (error) {
-      console.error('Error creating column:', error);
+      console.error("Error creating column:", error);
     }
   };
 
@@ -99,16 +99,9 @@ function Board() {
       });
       setColumnsData(updatedColumn);
     } catch (error) {
-      console.error('Error deleting column:', error);
+      console.error("Error deleting column:", error);
     }
   };
-
-  // const handleUpdateColumn = (columnId, updatedColumnData) => {
-  //   const columns = { ...columnsData };
-  //   columns[columnId] = updatedColumnData;
-
-  //   setColumnsData(columns);
-  // };
 
   //=================================================================================================
 
@@ -130,14 +123,14 @@ function Board() {
     console.log(source.droppableId);
 
     const startColumnIndex = columnsData.findIndex(
-      (column) => column._id === source.droppableId,
+      (column) => column._id === source.droppableId
     );
     const finishColumnIndex = columnsData.findIndex(
-      (column) => column._id === destination.droppableId,
+      (column) => column._id === destination.droppableId
     );
     //column not found in the array
     if (startColumnIndex === -1 || finishColumnIndex === -1) {
-      console.error('Column not found');
+      console.error("Column not found");
       return;
     }
 
@@ -149,7 +142,7 @@ function Board() {
       const reorderedTasks = reorder(
         startColumn.tasks,
         source.index,
-        destination.index,
+        destination.index
       );
 
       const updatedColumns = columnsData.map((column) => {
@@ -172,7 +165,7 @@ function Board() {
         startColumn.tasks,
         finishColumn.tasks,
         source,
-        destination,
+        destination
       );
 
       console.log(moveResult);
@@ -211,40 +204,40 @@ function Board() {
       />
       <div
         style={{
-          overflowX: 'auto',
-          padding: '24px',
-          maxHeight: '100%',
+          overflowX: "auto",
+          padding: "24px",
+          maxHeight: "100%",
         }}
       >
         <DragDropContext onDragEnd={onDragEnd}>
           <Button
             onClick={(event) => handleCreateColumn(event)}
-            variant='outlined'
+            variant="outlined"
             style={{
-              marginTop: '20px',
-              backgroundColor: '#f4f5f7',
-              borderRadius: '5px',
-              width: '250px',
-              padding: '10px',
-              opacity: '0.7',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              margin: '10px 5px',
-              boxSizing: 'border-box',
-              overflowY: 'auto',
+              marginTop: "20px",
+              backgroundColor: "#f4f5f7",
+              borderRadius: "5px",
+              width: "250px",
+              padding: "10px",
+              opacity: "0.7",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              margin: "10px 5px",
+              boxSizing: "border-box",
+              overflowY: "auto",
               flexShrink: 0,
-              height: 'auto',
+              height: "auto",
             }}
           >
             Add column
           </Button>
           <div
             style={{
-              display: 'flex',
-              flexWrap: 'nowrap',
-              minHeight: '100px',
+              display: "flex",
+              flexWrap: "nowrap",
+              minHeight: "100px",
             }}
           >
             {Object.values(columnsData).map((column) => {

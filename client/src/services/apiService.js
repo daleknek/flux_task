@@ -127,9 +127,6 @@ export const deleteTask = async (taskId) => {
   return api.delete(`/tasks/${taskId}`);
 };
 
-// User API calls
-// fetch users
-
 // Interceptor for handling errors
 api.interceptors.response.use(
   (response) => {

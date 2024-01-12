@@ -27,7 +27,6 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
-// const userRoutes = require("./routes/userRoutes");
 const boardRoutes = require("./routes/boardRoutes");
 const columnRoutes = require("./routes/columnRoutes");
 const taskRoutes = require("./routes/taskRoutes");
@@ -39,7 +38,6 @@ app.use((req, res, next) => {
 });
 
 app.use(authRoutes);
-// app.use("/users", userRoutes);
 app.use("/boards", boardRoutes);
 app.use("/columns", columnRoutes);
 app.use("/tasks", taskRoutes);
