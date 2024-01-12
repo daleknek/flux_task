@@ -88,10 +88,6 @@ columnsController.deleteColumn = async (req, res) => {
     if (!deletedColumn) {
       return res.status(404).json({ error: "Column not found" });
     }
-
-    // delete all tasks associated with the column
-    // await Task.deleteMany({ column: req.params.columnId });
-
     res.status(200).json({ message: "Column deleted successfully" });
   } catch (error) {
     res.status(400).json({ error: "Failed to delete column" });
