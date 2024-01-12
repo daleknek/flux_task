@@ -1,0 +1,20 @@
+version: "1"
+services:
+  server:
+    build:
+      context: ./server
+    container_name: server
+    ports:
+      - "4000:4000"
+    # environment:
+    #   ATLAS_URI: 'mongodb+srv://arro:TbIRWFR5SEKNmsUc@cluster0.j17r0zu.mongodb.net'
+    # dns:
+    #   - 8.8.8.8
+  client:
+    build:
+      context: ./client
+    container_name: client
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://server:4000

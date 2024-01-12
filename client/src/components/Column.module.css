@@ -1,0 +1,33 @@
+.container {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 5px;
+  min-width: 250px;
+  height: 100%;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2);
+  max-height: 400px;
+  position: relative;
+}
+
+.stickyContent {
+  position: sticky;
+}
+
+.addButton {
+  align-self: flex-end;
+  margin-top: 12px;
+}
+
+.draggableCard:hover {
+  box-shadow: 2px 5px 2px 0px rgba(255, 199, 234, 0.5);
+}
