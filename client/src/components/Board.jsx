@@ -25,7 +25,7 @@ function Board() {
   useEffect(() => {
     const fetchBoard = async () => {
       try {
-        const response = await initializeBoard();
+        const response = await initializeBoard(boardId);
 
         setBoardId(response._id);
         setBoardName(response.name);

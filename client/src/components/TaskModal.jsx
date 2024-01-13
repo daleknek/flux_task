@@ -51,7 +51,7 @@ function TaskModal({
             <Button
               variant="contained"
               color="primary"
-              onClick={() => createTask()}
+              onClick={() => createTask}
             >
               Create Task
             </Button>

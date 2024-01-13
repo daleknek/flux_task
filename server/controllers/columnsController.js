@@ -46,14 +46,9 @@ columnsController.createNewColumn = async (req, res) => {
     await column.save();
 
     // Update the board to reference the new column
-    // const board = await Board.findById(req.body.board);
-    // if (!board) {
-    //   // Delete the column if the board doesn't exist
-    //   await Column.findByIdAndDelete(column._id);
-    //   return res.status(404).json({ error: "Board not found" });
-    // }
-    // board.columns.push(column._id);
-    // await board.save();
+    const board = await Board.findById(req.body.board);
+    board.columns.push(column._id);
+    await board.save();
 
     res.status(201).json(column);
   } catch (error) {

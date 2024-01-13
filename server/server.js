@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const logRequests = require("./middleware/logRequests");
 const errorHandler = require("./middleware/errorHandler");
 
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 
 const app = express();
 const PORT = 4000;

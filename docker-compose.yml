@@ -6,10 +6,9 @@ services:
     container_name: server
     ports:
       - "4000:4000"
-    # environment:
-    #   ATLAS_URI: 'mongodb+srv://arro:TbIRWFR5SEKNmsUc@cluster0.j17r0zu.mongodb.net'
-    # dns:
-    #   - 8.8.8.8
+    environment:
+      ATLAS_URI: "${ATLAS_URI}"
+      JWT_SECRET: "${JWT_SECRET}"
   client:
     build:
       context: ./client

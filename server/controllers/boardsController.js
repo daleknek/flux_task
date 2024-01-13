@@ -6,7 +6,7 @@ const boardsController = {};
 // Get the single board of a user
 boardsController.getUserBoard = async (req, res) => {
   try {
-    const board = await Board.findOne({ name: "New Board" }).populate({
+    const board = await Board.findOne(req.params.boardId).populate({
       path: "columns",
       model: "Column",
       populate: {

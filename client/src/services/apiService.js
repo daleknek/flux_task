@@ -50,9 +50,9 @@ export const logIn = async (userData) => {
 };
 
 // Board API calls
-export const initializeBoard = async () => {
+export const initializeBoard = async (boardId) => {
   try {
-    const response = await api.get("/boards");
+    const response = await api.get("/boards", { boardId: boardId });
     return response.data;
   } catch (error) {
     if (error.response && error.response.status === 404) {
