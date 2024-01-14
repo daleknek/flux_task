@@ -215,11 +215,10 @@ function Board() {
             variant="outlined"
             style={{
               marginTop: "20px",
-              backgroundColor: "#f4f5f7",
+              backgroundColor: "#1976d2",
               borderRadius: "5px",
               width: "250px",
               padding: "10px",
-              opacity: "0.7",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -229,6 +228,7 @@ function Board() {
               overflowY: "auto",
               flexShrink: 0,
               height: "auto",
+              color: "#fff",
             }}
           >
             Add column
