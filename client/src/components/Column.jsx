@@ -124,6 +124,7 @@ function Column({ column, deleteColumn }) {
   ) => {
     try {
       const currentTaskData = {
+        _id: taskId,
         title: updatedTitle,
         description: updatedDescription,
         date: updatedDate,
