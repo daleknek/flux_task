@@ -1,7 +1,12 @@
-## How to view the app
+# Flux Task
 
-Run:
+A simple Kanban board app built with MERN stack.
 
-### `docker-compose up --build`
+## Prerequisites:
 
-Visit http://localhost:3000/
+Install docker desktop (https://www.docker.com/get-started/)
+
+1. Clone repo
+2. cd flux_task
+3. Run `docker-compose up --build`
+4. Visit http://localhost:3000/
