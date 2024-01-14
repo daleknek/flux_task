@@ -248,7 +248,11 @@ function Column({ column, deleteColumn }) {
         </div>
 
         <div className={styles.container}>
-          <Droppable droppableId={column._id} type="task">
+          <Droppable
+            droppableId={column._id}
+            type="task"
+            isDropDisabled={Number(column.tasks.length) === Number(wipLimit)}
+          >
             {(provided) => (
               <div
                 ref={provided.innerRef}
