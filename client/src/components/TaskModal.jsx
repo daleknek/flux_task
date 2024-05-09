@@ -9,8 +9,7 @@ import styles from "./TaskModal.module.css";
 import dayjs from "dayjs";
 
 function TaskModal({
-  open,
-  handleClose,
+  openModal,
   taskTitle,
   setTaskTitle,
   taskDescription,
@@ -19,11 +18,12 @@ function TaskModal({
   createTask,
   updateTask,
   taskId,
+  closeModal,
 }) {
   const [value, setValue] = useState(dayjs());
 
   return (
-    <Modal open={open} onClose={handleClose} className={styles.modal}>
+    <Modal open={openModal} onClose={closeModal} className={styles.modal}>
       <div className={styles.paper}>
         <div className={styles.container}>
           <div className={styles.textField}>
@@ -47,15 +47,7 @@ function TaskModal({
             value={taskDescription}
             onChange={setTaskDescription}
           />
-          {!taskId ? (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => createTask()}
-            >
-              Create Task
-            </Button>
-          ) : (
+          {taskId ? (
             <Button
               variant="contained"
               color="primary"
@@ -64,6 +56,14 @@ function TaskModal({
               }
             >
               Update Task
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => createTask()}
+            >
+              Create Task
             </Button>
           )}
         </div>

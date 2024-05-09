@@ -13,8 +13,8 @@ RUN npm install
 # Copy the rest of the application code to the container
 COPY . .
 
-# Expose the port your application is running on
+# Expose the port the application is running on
 EXPOSE 4000
 
-# Define the command to start your application
+# Define the command to start the application
 CMD ["node", "server.js"]

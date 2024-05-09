@@ -1,9 +1,9 @@
-import React from "react";
+import React, { createContext, useContext, useState, useMemo } from "react";
 
-export const LocalContext = React.createContext({});
+export const LocalContext = createContext({});
 
 export const useColumnsData = () => {
-  const context = React.useContext(LocalContext);
+  const context = useContext(LocalContext);
   if (!context) {
     throw new Error(
       `useColumnsData must be used within a LocalContextProvider`
@@ -13,10 +13,7 @@ export const useColumnsData = () => {
 };
 
 export const LocalContextProvider = (props) => {
-  const [columnsData, setColumnsData] = React.useState([]);
-  const value = React.useMemo(
-    () => [columnsData, setColumnsData],
-    [columnsData]
-  );
+  const [columnsData, setColumnsData] = useState([]);
+  const value = useMemo(() => [columnsData, setColumnsData], [columnsData]);
   return <LocalContext.Provider value={value} {...props} />;
 };

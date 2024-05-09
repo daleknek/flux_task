@@ -18,12 +18,12 @@ import {
 } from "../services/apiService.js";
 
 function Column({ column, deleteColumn }) {
-  const [taskTitle, setTaskTitle] = useState("To Do");
+  const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [dueDate, setDueDate] = useState(dayjs());
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState("");
-  const [editingTask, setEditingTask] = useState(false);
+  // const [editingTask, setEditingTask] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [columnsData, setColumnsData] = useColumnsData();
   const [editingTaskId, setEditingTaskId] = useState("");
@@ -148,7 +148,7 @@ function Column({ column, deleteColumn }) {
       console.error("Error updating task:", error);
     }
 
-    setEditingTask(false);
+    // setEditingTask(false);
     setIsModalOpen(false);
   };
 
@@ -169,12 +169,19 @@ function Column({ column, deleteColumn }) {
   };
 
   const handleEditClick = (task) => {
-    setEditingTask(true);
+    setEditingTaskId(task._id);
     setTaskTitle(task.title);
     setTaskDescription(task.description);
     setDueDate(task.date);
-    setEditingTaskId(task._id);
     setIsModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setEditingTaskId(null);
+    setTaskTitle("");
+    setTaskDescription("");
+    setDueDate(dayjs());
+    setIsModalOpen(false);
   };
 
   return (
@@ -302,14 +309,15 @@ function Column({ column, deleteColumn }) {
       </div>
 
       <TaskModal
-        open={isModalOpen}
-        handleClose={() => setIsModalOpen(false)}
+        openModal={isModalOpen}
+        closeModal={handleClose}
         taskTitle={taskTitle}
         setTaskTitle={setTaskTitle}
         taskDescription={taskDescription}
         setTaskDescription={setTaskDescription}
         columnId={column._id}
         taskId={editingTaskId}
+        setEditingTaskId={setEditingTaskId}
         createTask={handleCreateTask}
         updateTask={handleUpdateTask}
       />

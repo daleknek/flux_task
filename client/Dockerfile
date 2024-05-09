@@ -16,8 +16,8 @@ COPY . .
 # Build the React app for production
 RUN npm run build
 
-# Expose the port your React app will run on (usually 3000)
+# Expose the port the React app will run on  
 EXPOSE 3000
 
-# Command to start your React app (you may use a production server like Nginx)
+# Command to start the React app
 CMD ["npm", "start"]

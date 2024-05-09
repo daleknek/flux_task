@@ -4,6 +4,7 @@ import SignUp from "./components/SignUp.jsx";
 import Login from "./components/Login.jsx";
 import Board from "./components/Board.jsx";
 import jwtDecode from "jwt-decode";
+import Logout from "./components/Logout.jsx";
 
 function App() {
   function RequireAuth({ children, redirectTo }) {
@@ -35,6 +36,7 @@ function App() {
       />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/logout" element={<Logout />} />
     </Routes>
   );
 }
