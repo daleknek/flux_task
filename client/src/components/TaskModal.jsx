@@ -54,7 +54,7 @@ function TaskModal({
           <div className={styles.userSelectContainer}>
             <UserDropdown
               users={users}
-              // selectedUserId={selectedUserId}
+              selectedUserId={selectedUserId}
               onSelectUser={onSelectUser}
             />
             <div>

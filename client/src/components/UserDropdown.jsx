@@ -12,7 +12,7 @@ function UserDropdown({ users, onSelectUser, selectedUserId }) {
       <Select
         labelId="user-select-label"
         id="user-select"
-        value={selectedUserId}
+        value={selectedUserId ?? ""}
         label="User"
         onChange={(e) => onSelectUser(e.target.value)}
         style={{ minWidth: 120 }}

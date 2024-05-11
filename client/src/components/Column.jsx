@@ -94,12 +94,9 @@ function Column({ column, deleteColumn }) {
     loadUsers();
   }, []);
 
-  // αυτό δεν σετάρει πιθανόν σωστά τον χρήστη στο task. Προσπαθώ να κατάλαβω από που θα βρώ αυτό το id.
-  //πχ στο column το κάνουμε access ως column._id
-
   const handleUserChange = (userId) => {
     console.log("Handling user change, new ID:", userId);
-    setSelectedUserId(userId);
+    setSelectedUserId(userId); // σετάρει το selectedUserId με το id του χρήστη που επιλέγεται. Μετά το κάνω pass στο updateTask.
   };
 
   //=================================================================================================
@@ -112,7 +109,6 @@ function Column({ column, deleteColumn }) {
       description: taskDescription,
       date: dayjs().format("MM/DD/YYYY"),
       column: column._id,
-      user: users._id,
     };
 
     try {
