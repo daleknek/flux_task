@@ -4,6 +4,16 @@ const jwt = require("jsonwebtoken");
 
 const usersController = {};
 
+// Get all users
+usersController.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(400).json({ error: "Failed to fetch users" });
+  }
+};
+
 // Sign up user
 usersController.signUp = async (req, res) => {
   try {
@@ -11,7 +21,6 @@ usersController.signUp = async (req, res) => {
 
     const user = new User({ email, username, password });
     await user.save();
-
     res.status(201).send({ message: "User registered successfully!" });
   } catch (error) {
     res.status(400).send({ error: error.message });
@@ -35,7 +44,7 @@ usersController.logIn = async (req, res) => {
     const token = jwt.sign({ _id: user._id }, SECRET, {
       expiresIn: "1h",
     });
-    res.send({ _id: user._id, token });
+    res.send({ _id: user._id, token, username: user.username });
   } catch (error) {
     console.log(error);
     res.status(500).send("Server error");

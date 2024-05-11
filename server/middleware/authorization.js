@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const SECRET = process.env.JWT_SECRET;
 
-const authentication = (req, res, next) => {
+const authorization = (req, res, next) => {
   // Check for the existence of the Authorization header
   const authHeader = req.header("Authorization");
 
@@ -26,4 +26,4 @@ const authentication = (req, res, next) => {
   }
 };
 
-module.exports = authentication;
+module.exports = authorization;

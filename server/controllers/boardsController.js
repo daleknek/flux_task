@@ -50,7 +50,6 @@ boardsController.createNewBoard = async (req, res) => {
     };
     const board = new Board(boardData);
     await board.save();
-
     res.status(201).json(board);
   } catch (error) {
     console.error("Error when creating board:", error.message);
@@ -69,9 +68,6 @@ boardsController.updateBoard = async (req, res) => {
       req.body,
       { new: true }
     );
-
-    // console.log("Updated board:", updatedBoard);
-
     if (!updatedBoard) {
       return res.status(404).json({ error: "Board not found" });
     }

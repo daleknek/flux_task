@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Typography, Input } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Button, Typography, Input, IconButton } from "@mui/material";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import TaskModal from "./TaskModal.jsx";
 import TaskCard from "./TaskCard.jsx";
@@ -15,6 +15,7 @@ import {
   deleteTask,
   updateTask,
   updateColumn,
+  fetchUsers,
 } from "../services/apiService.js";
 
 function Column({ column, deleteColumn }) {
@@ -23,12 +24,13 @@ function Column({ column, deleteColumn }) {
   const [dueDate, setDueDate] = useState(dayjs());
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState("");
-  // const [editingTask, setEditingTask] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [columnsData, setColumnsData] = useColumnsData();
   const [editingTaskId, setEditingTaskId] = useState("");
   const [wipLimit, setWIPLimit] = useState("5");
   const [isEditingWIPLimit, setIsEditingWIPLimit] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState("");
 
   //Column functions
 
@@ -76,6 +78,30 @@ function Column({ column, deleteColumn }) {
     }
   };
 
+  //User functions
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const fetchedUsers = await fetchUsers();
+        setUsers(fetchedUsers.data);
+        console.log("Users fetched:", fetchedUsers.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    loadUsers();
+  }, []);
+
+  // αυτό δεν σετάρει πιθανόν σωστά τον χρήστη στο task. Προσπαθώ να κατάλαβω από που θα βρώ αυτό το id.
+  //πχ στο column το κάνουμε access ως column._id
+
+  const handleUserChange = (userId) => {
+    console.log("Handling user change, new ID:", userId);
+    setSelectedUserId(userId);
+  };
+
   //=================================================================================================
 
   const tasks = column.tasks || [];
@@ -86,13 +112,13 @@ function Column({ column, deleteColumn }) {
       description: taskDescription,
       date: dayjs().format("MM/DD/YYYY"),
       column: column._id,
-      // user: user._id,
+      user: users._id,
     };
 
     try {
       const response = await createTask(newTask);
       const createdTask = response.data;
-
+      console.log("Created task:", createdTask);
       const updatedColumnTaskData = {
         tasks: [...column.tasks, createdTask],
       };
@@ -120,7 +146,8 @@ function Column({ column, deleteColumn }) {
     taskId,
     updatedTitle,
     updatedDescription,
-    updatedDate
+    updatedDate,
+    selectedUserId
   ) => {
     try {
       const currentTaskData = {
@@ -128,6 +155,7 @@ function Column({ column, deleteColumn }) {
         title: updatedTitle,
         description: updatedDescription,
         date: updatedDate,
+        user: selectedUserId,
       };
       await updateTask(taskId, currentTaskData);
 
@@ -148,7 +176,6 @@ function Column({ column, deleteColumn }) {
       console.error("Error updating task:", error);
     }
 
-    // setEditingTask(false);
     setIsModalOpen(false);
   };
 
@@ -176,12 +203,21 @@ function Column({ column, deleteColumn }) {
     setIsModalOpen(true);
   };
 
-  const handleClose = () => {
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    clearState();
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    clearState();
+  };
+
+  const clearState = () => {
     setEditingTaskId(null);
     setTaskTitle("");
     setTaskDescription("");
     setDueDate(dayjs());
-    setIsModalOpen(false);
   };
 
   return (
@@ -199,7 +235,13 @@ function Column({ column, deleteColumn }) {
               style={{ fontSize: "18px", fontWeight: "bold" }}
             />
           ) : (
-            <div style={{ display: "flex" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <Typography
                 variant="h6"
                 onClick={handleEditName}
@@ -211,13 +253,13 @@ function Column({ column, deleteColumn }) {
               >
                 {column.name}
               </Typography>
-              <Button
-                style={{ opacity: 0.5 }}
+              <IconButton
                 onMouseEnter={(e) => (e.currentTarget.style.opacity = 1)}
                 onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.5)}
                 onClick={deleteColumn}
-                startIcon={<DeleteIcon />}
-              />
+              >
+                <DeleteIcon />
+              </IconButton>
             </div>
           )}
           {!isEditingWIPLimit ? (
@@ -296,7 +338,7 @@ function Column({ column, deleteColumn }) {
         </div>
         <div className={styles.addButton}>
           <Button
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleOpenModal}
             startIcon={<AddIcon />}
             disabled={tasks.length >= wipLimit}
             style={{
@@ -310,16 +352,20 @@ function Column({ column, deleteColumn }) {
 
       <TaskModal
         openModal={isModalOpen}
-        closeModal={handleClose}
+        closeModal={handleCloseModal}
         taskTitle={taskTitle}
         setTaskTitle={setTaskTitle}
         taskDescription={taskDescription}
         setTaskDescription={setTaskDescription}
+        taskDate={dueDate}
         columnId={column._id}
         taskId={editingTaskId}
         setEditingTaskId={setEditingTaskId}
         createTask={handleCreateTask}
         updateTask={handleUpdateTask}
+        users={users} // η λίστα με τους χρήστες
+        selectedUserId={selectedUserId} // το id του χρήστη που επιλέγεται
+        onSelectUser={handleUserChange} // η μέθοδος που καλείται όταν αλλάζει ο χρήστης
       />
     </>
   );

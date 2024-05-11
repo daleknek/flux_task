@@ -30,7 +30,7 @@ function Board() {
         setBoardId(response._id);
         setBoardName(response.name);
         setColumnsData(response.columns);
-        console.log(response);
+        console.log("Board response:", response);
       } catch (error) {
         console.error("Error fetching board details:", error);
       }

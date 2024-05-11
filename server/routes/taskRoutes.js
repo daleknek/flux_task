@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const tasksController = require("../controllers/tasksController");
-const authentication = require("../middleware/authentication");
+const authorization = require("../middleware/authorization");
 
 router
   .route("/")
-  .get(authentication, tasksController.getAllTasks)
-  .post(authentication, tasksController.createNewTask);
+  .get(authorization, tasksController.getAllTasks)
+  .post(authorization, tasksController.createNewTask);
 
 router
   .route("/:taskId")
-  .get(authentication, tasksController.getTaskById)
-  .patch(authentication, tasksController.updateTask)
-  .delete(authentication, tasksController.deleteTask);
+  .get(authorization, tasksController.getTaskById)
+  .patch(authorization, tasksController.updateTask)
+  .delete(authorization, tasksController.deleteTask);
 
 module.exports = router;

@@ -7,6 +7,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import styles from "./TaskModal.module.css";
 import dayjs from "dayjs";
+import UserDropdown from "./UserDropdown";
 
 function TaskModal({
   openModal,
@@ -19,6 +20,9 @@ function TaskModal({
   updateTask,
   taskId,
   closeModal,
+  users,
+  selectedUserId,
+  onSelectUser,
 }) {
   const [value, setValue] = useState(dayjs());
 
@@ -43,29 +47,44 @@ function TaskModal({
             </LocalizationProvider>
           </div>
           <ReactQuill
-            style={{ width: "100%", height: "500px", marginBottom: "50px" }}
+            style={{ width: "100%", height: "300px", marginBottom: "40px" }}
             value={taskDescription}
             onChange={setTaskDescription}
           />
-          {taskId ? (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() =>
-                updateTask(taskId, taskTitle, taskDescription, taskDate)
-              }
-            >
-              Update Task
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => createTask()}
-            >
-              Create Task
-            </Button>
-          )}
+          <div className={styles.userSelectContainer}>
+            <UserDropdown
+              users={users}
+              // selectedUserId={selectedUserId}
+              onSelectUser={onSelectUser}
+            />
+            <div>
+              {taskId ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() =>
+                    updateTask(
+                      taskId,
+                      taskTitle,
+                      taskDescription,
+                      taskDate,
+                      selectedUserId
+                    )
+                  }
+                >
+                  Update Task
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => createTask()}
+                >
+                  Create Task
+                </Button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </Modal>

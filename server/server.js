@@ -14,7 +14,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(logRequests);
+// app.use(logRequests);
 
 app.get("/", (req, res) => {
   res.send("Hello from the server!");
@@ -31,6 +31,7 @@ const boardRoutes = require("./routes/boardRoutes");
 const columnRoutes = require("./routes/columnRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 app.use((req, res, next) => {
   console.log("Middle log:", req.body);
@@ -38,11 +39,12 @@ app.use((req, res, next) => {
 });
 
 app.use(authRoutes);
+app.use("/users", userRoutes);
 app.use("/boards", boardRoutes);
 app.use("/columns", columnRoutes);
 app.use("/tasks", taskRoutes);
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

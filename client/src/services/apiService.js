@@ -127,14 +127,7 @@ export const deleteTask = async (taskId) => {
   return api.delete(`/tasks/${taskId}`);
 };
 
-// Interceptor for handling errors
-api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    // Handle errors here, e.g. logging or showing notifications
-    console.error("API Error:", error);
-    return Promise.reject(error);
-  }
-);
+//User API calls --> το fetch δουλευει
+export const fetchUsers = async () => {
+  return api.get("/users");
+};

@@ -49,7 +49,6 @@ columnsController.createNewColumn = async (req, res) => {
     const board = await Board.findById(req.body.board);
     board.columns.push(column._id);
     await board.save();
-
     res.status(201).json(column);
   } catch (error) {
     console.log(error);
@@ -66,9 +65,6 @@ columnsController.updateColumn = async (req, res) => {
       req.body,
       { new: true }
     );
-    // if (!updatedColumn) {
-    //   return res.status(404).json({ error: "Column not found" });
-    // }
     res.status(200).json(updatedColumn);
   } catch (error) {
     console.error("Error in updateColumn:", error);
@@ -80,9 +76,6 @@ columnsController.updateColumn = async (req, res) => {
 columnsController.deleteColumn = async (req, res) => {
   try {
     const deletedColumn = await Column.findByIdAndDelete(req.params.columnId);
-    // if (!deletedColumn) {
-    //   return res.status(404).json({ error: "Column not found" });
-    // }
     res.status(200).json({ message: "Column deleted successfully" });
   } catch (error) {
     res.status(400).json({ error: "Failed to delete column" });

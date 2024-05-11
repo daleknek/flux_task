@@ -1,16 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const boardsController = require("../controllers/boardsController");
-const authentication = require("../middleware/authentication");
+const authorization = require("../middleware/authorization");
 
 router
   .route("/")
-  .get(authentication, boardsController.getUserBoard)
-  .post(authentication, boardsController.createNewBoard);
+  .get(authorization, boardsController.getUserBoard)
+  .post(authorization, boardsController.createNewBoard);
 
 router
   .route("/:boardId")
-  .get(authentication, boardsController.getBoardById)
-  .patch(authentication, boardsController.updateBoard);
+  .get(authorization, boardsController.getBoardById)
+  .patch(authorization, boardsController.updateBoard);
 
 module.exports = router;
