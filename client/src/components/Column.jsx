@@ -79,7 +79,7 @@ function Column({ column, deleteColumn }) {
   };
 
   //User functions
-
+  // φετσάρω users και μπαίνουν στο state.
   useEffect(() => {
     const loadUsers = async () => {
       try {
@@ -95,7 +95,7 @@ function Column({ column, deleteColumn }) {
   }, []);
 
   const handleUserChange = (userId) => {
-    console.log("Handling user change, new ID:", userId);
+    console.log("Handling user change, new ID:", userId); // βοηθητικό console.log για να δω το id του χρήστη που επιλέγω. μπορεί να σβηστεί.
     setSelectedUserId(userId); // σετάρει το selectedUserId με το id του χρήστη που επιλέγεται. Μετά το κάνω pass στο updateTask.
   };
 
@@ -109,12 +109,12 @@ function Column({ column, deleteColumn }) {
       description: taskDescription,
       date: dayjs().format("MM/DD/YYYY"),
       column: column._id,
+      user: selectedUserId,
     };
 
     try {
       const response = await createTask(newTask);
       const createdTask = response.data;
-      console.log("Created task:", createdTask);
       const updatedColumnTaskData = {
         tasks: [...column.tasks, createdTask],
       };
@@ -319,6 +319,10 @@ function Column({ column, deleteColumn }) {
                       >
                         <TaskCard
                           task={task}
+                          username={
+                            users.find((user) => user._id === task.user)
+                              ?.username || "Unassigned"
+                          } // εδώ βρίσκει το όνομα του χρήστη που αντιστοιχεί στο task αλλιώς βάζει "Unassigned"
                           columnId={column._id}
                           onDelete={handleDeleteTask}
                           onEdit={handleEditClick}

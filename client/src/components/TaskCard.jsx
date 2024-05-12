@@ -6,11 +6,10 @@ import styles from "./TaskCard.module.css";
 import Chip from "@mui/material/Chip";
 import FaceIcon from "@mui/icons-material/Face";
 
-function TaskCard({ task, onDelete, onEdit }) {
-  //print tasks
-  console.log(task);
-  // πρέπει να φέρω τον selectedUser από τον TaskModal
-  const username = task.user?.username;
+function TaskCard({ task, onDelete, onEdit, username }) {
+  //print tasks and username
+  // console.log(task);
+  console.log(username);
 
   return (
     <div className={styles.card}>
