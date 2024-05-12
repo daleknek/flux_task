@@ -22,18 +22,20 @@ function TaskCard({ task, onDelete, onEdit, username }) {
       >
         {task.title}
       </h3>
-      <Chip icon={<FaceIcon />} label={username} variant="outlined" />
-      <div style={{ alignSelf: "flex-end" }}>
-        <IconButton
-          size="small"
-          onClick={() => onEdit(task)}
-          style={{ marginRight: "5px" }}
-        >
-          <EditIcon fontSize="small" />
-        </IconButton>
-        <IconButton size="small" onClick={() => onDelete(task._id)}>
-          <DeleteIcon fontSize="small" />
-        </IconButton>
+      <div className={styles.container}>
+        <Chip icon={<FaceIcon />} label={username} variant="outlined" />
+        <div style={{ alignSelf: "flex-end" }}>
+          <IconButton
+            size="small"
+            onClick={() => onEdit(task)}
+            style={{ marginRight: "5px" }}
+          >
+            <EditIcon fontSize="small" />
+          </IconButton>
+          <IconButton size="small" onClick={() => onDelete(task._id)}>
+            <DeleteIcon fontSize="small" />
+          </IconButton>
+        </div>
       </div>
     </div>
   );
