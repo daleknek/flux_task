@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const logRequests = require("./middleware/logRequests");
-const errorHandler = require("./middleware/errorHandler");
 
 require("dotenv").config({ path: "../.env" });
 
