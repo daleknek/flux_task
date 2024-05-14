@@ -127,7 +127,7 @@ export const deleteTask = async (taskId) => {
   return api.delete(`/tasks/${taskId}`);
 };
 
-//User API calls --> το fetch δουλευει
+//User API calls
 export const fetchUsers = async () => {
   return api.get("/users");
 };

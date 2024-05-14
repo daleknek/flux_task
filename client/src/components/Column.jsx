@@ -79,7 +79,6 @@ function Column({ column, deleteColumn }) {
   };
 
   //User functions
-  // φετσάρω users και μπαίνουν στο state.
   useEffect(() => {
     const loadUsers = async () => {
       try {
@@ -95,8 +94,7 @@ function Column({ column, deleteColumn }) {
   }, []);
 
   const handleUserChange = (userId) => {
-    console.log("Handling user change, new ID:", userId); // βοηθητικό console.log για να δω το id του χρήστη που επιλέγω. μπορεί να σβηστεί.
-    setSelectedUserId(userId); // σετάρει το selectedUserId με το id του χρήστη που επιλέγεται. Μετά το κάνω pass στο updateTask.
+    setSelectedUserId(userId);
   };
 
   //=================================================================================================
@@ -214,6 +212,7 @@ function Column({ column, deleteColumn }) {
     setTaskTitle("");
     setTaskDescription("");
     setDueDate(dayjs());
+    setSelectedUserId("");
   };
 
   return (
@@ -221,15 +220,30 @@ function Column({ column, deleteColumn }) {
       <div className={styles.column}>
         <div className={styles.stickyContent}>
           {isEditingName || !column.name ? (
-            <Input
-              placeholder="Enter column name"
-              value={editedName}
-              onChange={handleNameChange}
-              onBlur={handleNameSave}
-              onKeyDown={(event) => event.key === "Enter" && handleNameSave()}
-              autoFocus
-              style={{ fontSize: "18px", fontWeight: "bold" }}
-            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Input
+                placeholder="Enter column name"
+                value={editedName}
+                onChange={handleNameChange}
+                onBlur={handleNameSave}
+                onKeyDown={(event) => event.key === "Enter" && handleNameSave()}
+                autoFocus
+                style={{ fontSize: "18px", fontWeight: "bold" }}
+              />
+              <IconButton
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = 1)}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.5)}
+                onClick={deleteColumn}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </div>
           ) : (
             <div
               style={{
@@ -253,6 +267,7 @@ function Column({ column, deleteColumn }) {
                 onMouseEnter={(e) => (e.currentTarget.style.opacity = 1)}
                 onMouseLeave={(e) => (e.currentTarget.style.opacity = 0.5)}
                 onClick={deleteColumn}
+                disabled={column.tasks.length > 0}
               >
                 <DeleteIcon />
               </IconButton>
@@ -321,8 +336,8 @@ function Column({ column, deleteColumn }) {
                           task={task}
                           username={
                             users.find((user) => user._id === task.user)
-                              ?.username || "Unassigned"
-                          } // εδώ βρίσκει το όνομα του χρήστη που αντιστοιχεί στο task αλλιώς βάζει "Unassigned"
+                              ?.username
+                          }
                           columnId={column._id}
                           onDelete={handleDeleteTask}
                           onEdit={handleEditClick}

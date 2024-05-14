@@ -7,10 +7,6 @@ import Chip from "@mui/material/Chip";
 import FaceIcon from "@mui/icons-material/Face";
 
 function TaskCard({ task, onDelete, onEdit, username }) {
-  //print tasks and username
-  // console.log(task);
-  console.log(username);
-
   return (
     <div className={styles.card}>
       <h3

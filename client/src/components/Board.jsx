@@ -26,7 +26,6 @@ function Board() {
     const fetchBoard = async () => {
       try {
         const response = await initializeBoard(boardId);
-
         setBoardId(response._id);
         setBoardName(response.name);
         setColumnsData(response.columns);
@@ -55,9 +54,9 @@ function Board() {
     return () => {
       clearTimeout(handler);
     };
-  }, [boardName, boardId]);
+  }, []);
 
-  const handleBoardNameChange = (event) => {
+  const handleBoardNameChange = async (event) => {
     setBoardName(event.target.value);
   };
 

@@ -14,7 +14,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
-// app.use(logRequests);
+app.use(logRequests);
 
 app.get("/", (req, res) => {
   res.send("Hello from the server!");
@@ -43,8 +43,6 @@ app.use("/users", userRoutes);
 app.use("/boards", boardRoutes);
 app.use("/columns", columnRoutes);
 app.use("/tasks", taskRoutes);
-
-// app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

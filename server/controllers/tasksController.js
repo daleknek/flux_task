@@ -38,12 +38,10 @@ tasksController.getTaskById = async (req, res) => {
 tasksController.createNewTask = async (req, res) => {
   try {
     const userId = req.user._id;
-    // const username = req.user.username;
     await User.findById(userId);
     const task = new Task({
       ...req.body,
       user: userId,
-      // user: { _id: userId, username },
     });
     await task.save();
     res.status(201).json(task);
