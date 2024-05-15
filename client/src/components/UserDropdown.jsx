@@ -11,7 +11,7 @@ function UserDropdown({ users, onSelectUser, selectedUserId }) {
           id="user-select"
           value={selectedUserId}
           label="User"
-          onChange={(e) => onSelectUser(e.target.value)}
+          onChange={(event) => onSelectUser(event.target.value)}
           style={{ minWidth: 120 }}
         >
           {users.map((user) => (

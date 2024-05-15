@@ -37,8 +37,8 @@ tasksController.getTaskById = async (req, res) => {
 // Create a new task for a column
 tasksController.createNewTask = async (req, res) => {
   try {
-    const userId = req.user._id;
-    await User.findById(userId);
+    const userId = req.body.user !== "" ? req.body.user : req.user._id;
+    console.log("User ID", req.user._id);
     const task = new Task({
       ...req.body,
       user: userId,

@@ -21,7 +21,7 @@ import {
 function Column({ column, deleteColumn }) {
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
-  const [dueDate, setDueDate] = useState(dayjs());
+  const [taskDate, setTaskDate] = useState(dayjs());
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,6 +31,26 @@ function Column({ column, deleteColumn }) {
   const [isEditingWIPLimit, setIsEditingWIPLimit] = useState(false);
   const [users, setUsers] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState("");
+
+  //User functions
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const fetchedUsers = await fetchUsers();
+        setUsers(fetchedUsers.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    loadUsers();
+  }, []);
+
+  const handleUserChange = (userId) => {
+    setSelectedUserId(userId);
+    console.log("Selected user:", userId);
+  };
 
   //Column functions
 
@@ -78,26 +98,7 @@ function Column({ column, deleteColumn }) {
     }
   };
 
-  //User functions
-  useEffect(() => {
-    const loadUsers = async () => {
-      try {
-        const fetchedUsers = await fetchUsers();
-        setUsers(fetchedUsers.data);
-        console.log("Users fetched:", fetchedUsers.data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-
-    loadUsers();
-  }, []);
-
-  const handleUserChange = (userId) => {
-    setSelectedUserId(userId);
-  };
-
-  //=================================================================================================
+  // Task functions
 
   const tasks = column.tasks || [];
 
@@ -105,13 +106,14 @@ function Column({ column, deleteColumn }) {
     const newTask = {
       title: taskTitle,
       description: taskDescription,
-      date: dayjs().format("MM/DD/YYYY"),
+      date: taskDate,
       column: column._id,
       user: selectedUserId,
     };
-
+    console.log("New task:", newTask);
     try {
       const response = await createTask(newTask);
+
       const createdTask = response.data;
       const updatedColumnTaskData = {
         tasks: [...column.tasks, createdTask],
@@ -193,7 +195,8 @@ function Column({ column, deleteColumn }) {
     setEditingTaskId(task._id);
     setTaskTitle(task.title);
     setTaskDescription(task.description);
-    setDueDate(task.date);
+    setTaskDate(task.date);
+    setSelectedUserId(task.user);
     setIsModalOpen(true);
   };
 
@@ -211,7 +214,7 @@ function Column({ column, deleteColumn }) {
     setEditingTaskId(null);
     setTaskTitle("");
     setTaskDescription("");
-    setDueDate(dayjs());
+    setTaskDate(dayjs());
     setSelectedUserId("");
   };
 
@@ -372,15 +375,16 @@ function Column({ column, deleteColumn }) {
         setTaskTitle={setTaskTitle}
         taskDescription={taskDescription}
         setTaskDescription={setTaskDescription}
-        taskDate={dueDate}
+        taskDate={taskDate}
+        setTaskDate={setTaskDate}
         columnId={column._id}
         taskId={editingTaskId}
         setEditingTaskId={setEditingTaskId}
         createTask={handleCreateTask}
         updateTask={handleUpdateTask}
-        users={users} // η λίστα με τους χρήστες
-        selectedUserId={selectedUserId} // το id του χρήστη που επιλέγεται
-        onSelectUser={handleUserChange} // η μέθοδος που καλείται όταν αλλάζει ο χρήστης
+        users={users}
+        selectedUserId={selectedUserId}
+        onSelectUser={handleUserChange}
       />
     </>
   );

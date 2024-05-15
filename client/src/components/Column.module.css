@@ -31,7 +31,3 @@
 .draggableCard:hover {
   box-shadow: 2px 5px 2px 0px rgba(255, 199, 234, 0.5);
 }
-/* 
-.deleteColumnButton:disabled:hover {
-  cursor: not-allowed;
-} */

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Modal, TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -6,8 +6,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import styles from "./TaskModal.module.css";
-import dayjs from "dayjs";
 import UserDropdown from "./UserDropdown";
+import dayjs from "dayjs";
 
 function TaskModal({
   openModal,
@@ -16,6 +16,7 @@ function TaskModal({
   taskDescription,
   setTaskDescription,
   taskDate,
+  setTaskDate,
   createTask,
   updateTask,
   taskId,
@@ -24,8 +25,6 @@ function TaskModal({
   selectedUserId,
   onSelectUser,
 }) {
-  const [value, setValue] = useState(dayjs());
-
   return (
     <Modal open={openModal} onClose={closeModal} className={styles.modal}>
       <div className={styles.paper}>
@@ -41,8 +40,8 @@ function TaskModal({
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Calendar"
-                value={value}
-                onChange={(newValue) => setValue(newValue)}
+                value={dayjs(taskDate)}
+                onChange={(newValue) => setTaskDate(newValue)}
               />
             </LocalizationProvider>
           </div>
