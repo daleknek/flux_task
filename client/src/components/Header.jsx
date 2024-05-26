@@ -7,7 +7,7 @@ function Header({
   isEditingBoardName,
   editBoardName,
   handleBoardNameChange,
-  handleKeyDownBoardName,
+  handleBoardNameSave,
   showLogout,
 }) {
   return (
@@ -28,13 +28,15 @@ function Header({
         >
           {isEditingBoardName ? (
             <Input
-              style={{ color: "#fff", fontSize: "20px", fontWeight: "bold" }}
-              type="text"
               placeholder="Enter board name"
-              value={boardName || ""}
+              value={boardName}
               onChange={handleBoardNameChange}
-              onKeyDown={handleKeyDownBoardName}
+              onBlur={handleBoardNameSave}
+              onKeyDown={(event) =>
+                event.key === "Enter" && handleBoardNameSave()
+              }
               autoFocus
+              style={{ color: "#fff", fontSize: "20px", fontWeight: "bold" }}
             />
           ) : (
             <Typography

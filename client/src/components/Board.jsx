@@ -19,7 +19,7 @@ import {
 function Board() {
   const [boardId, setBoardId] = useState(null);
   const [boardName, setBoardName] = useState("");
-  const [isEditingBoardName, setIsEditingBoardName] = useState(true);
+  const [isEditingBoardName, setIsEditingBoardName] = useState(false);
   const [columnsData, setColumnsData] = useColumnsData([]);
 
   useEffect(() => {
@@ -38,37 +38,21 @@ function Board() {
     fetchBoard();
   }, []);
 
-  useEffect(() => {
-    // Handler to be called after a delay
-    const handler = setTimeout(() => {
-      if (boardName) {
-        try {
-          updateBoardName(boardId, boardName);
-        } catch (error) {
-          console.error("Error updating board name:", error);
-        }
-      }
-    }, 300);
-
-    // Cleanup function to clear the timeout
-    return () => {
-      clearTimeout(handler);
-    };
-  }, []);
-
-  const handleBoardNameChange = async (event) => {
+  const handleBoardNameChange = (event) => {
     setBoardName(event.target.value);
-  };
-
-  const handleKeyDownBoardName = async (event) => {
-    if (event.key === "Enter") {
-      setIsEditingBoardName(false);
-      event.preventDefault();
-    }
   };
 
   const editBoardName = () => {
     setIsEditingBoardName(true);
+  };
+
+  const handleBoardNameSave = async () => {
+    setIsEditingBoardName(false);
+    try {
+      await updateBoardName(boardId, boardName);
+    } catch (error) {
+      console.error("Error updating board name:", error);
+    }
   };
 
   //=================================================================================================
@@ -198,7 +182,7 @@ function Board() {
         isEditingBoardName={isEditingBoardName}
         editBoardName={editBoardName}
         handleBoardNameChange={handleBoardNameChange}
-        handleKeyDownBoardName={handleKeyDownBoardName}
+        handleBoardNameSave={handleBoardNameSave}
         showLogout={true}
       />
       <div

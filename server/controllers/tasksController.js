@@ -11,7 +11,6 @@ tasksController.getAllTasks = async (req, res) => {
       path: "user",
       select: "username _id",
     });
-    console.log("Fetched tasks:", tasks);
     res.status(200).json(tasks);
   } catch (error) {
     res.status(400).json({ error: "Failed to fetch tasks" });
@@ -38,7 +37,6 @@ tasksController.getTaskById = async (req, res) => {
 tasksController.createNewTask = async (req, res) => {
   try {
     const userId = req.body.user !== "" ? req.body.user : req.user._id;
-    console.log("User ID", req.user._id);
     const task = new Task({
       ...req.body,
       user: userId,

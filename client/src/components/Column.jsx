@@ -37,8 +37,8 @@ function Column({ column, deleteColumn }) {
   useEffect(() => {
     const loadUsers = async () => {
       try {
-        const fetchedUsers = await fetchUsers();
-        setUsers(fetchedUsers.data);
+        const response = await fetchUsers();
+        setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
       }

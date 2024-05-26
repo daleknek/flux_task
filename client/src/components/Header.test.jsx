@@ -32,7 +32,7 @@ describe("Header", () => {
       boardName: "Test Board",
       isEditingBoardName: true,
       handleBoardNameChange: jest.fn(),
-      handleKeyDownBoardName: jest.fn(),
+      handleBoardNameSave: jest.fn(),
     };
 
     render(
@@ -48,7 +48,7 @@ describe("Header", () => {
     expect(boardNameInput.value).toBe("Test Board");
     userEvent.keyboard("{enter}");
     await waitFor(() => {
-      expect(props.handleKeyDownBoardName).toHaveBeenCalled();
+      expect(props.handleBoardNameSave).toHaveBeenCalled();
     });
     await waitFor(() => {
       expect(props.handleBoardNameChange).toHaveBeenCalled();

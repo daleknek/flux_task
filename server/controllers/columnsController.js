@@ -13,7 +13,6 @@ columnsController.getAllColumns = async (req, res) => {
       model: "Task",
     });
     res.status(200).json(columns);
-    console.log("My columns: ", columns);
   } catch (error) {
     res.status(400).json({ error: "Failed to fetch columns" });
   }

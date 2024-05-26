@@ -24,11 +24,9 @@ api.interceptors.request.use(
 //for handling redirection to login page if token is expired
 api.interceptors.response.use(
   (response) => {
-    // Any status code that lies within the range of 2xx cause this function to trigger
     return response;
   },
   (error) => {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("token");
       window.location = "/login";
@@ -40,7 +38,6 @@ api.interceptors.response.use(
 export default api;
 
 //Login & Signup API calls
-
 export const signUp = async (userData) => {
   return api.post("/signup", userData);
 };
