@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 require("mongoose-type-email");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 const Schema = mongoose.Schema;
 
